@@ -1,0 +1,43 @@
+# Ignore datasets
+data/
+
+# Ignore model files
+*.pth
+*.pt
+
+# Jupyter
+.ipynb_checkpoints/
+echo "data/" >> .gitignore
+echo "*.pth" >> .gitignore
+echo "*.tar.gz" >> .gitignore
+cat > .gitignore << 'EOF'
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+*.egg
+*.egg-info/
+.ipynb_checkpoints/
+
+# Data folders
+data/
+*.tar
+*.zip
+*.gz
+
+# Model files (optional - comment out if you want to track them)
+# *.pth
+# *.onnx
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# macOS
+.DS_Store
+EOF
