@@ -1,0 +1,30 @@
+# Model files (too large for GitHub)
+*.onnx
+*.pth
+*.onnx.data
+
+# Dataset directory
+ILSVRC2012_img_val/
+
+# Virtual environment
+torchenv/
+venv/
+env/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# macOS
+.DS_Store
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
