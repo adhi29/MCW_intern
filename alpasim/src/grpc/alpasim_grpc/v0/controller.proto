@@ -1,0 +1,69 @@
+// SPDX-License-Identifier: Apache-2.0
+// Copyright (c) 2025 NVIDIA Corporation
+
+syntax = "proto3";
+
+package controller;
+
+import "alpasim_grpc/v0/common.proto";
+
+
+service VDCService {
+  rpc get_version(common.Empty) returns (common.VersionId);
+  rpc start_session (VDCSessionRequest) returns (common.SessionRequestStatus);
+  rpc close_session (VDCSessionCloseRequest) returns (common.Empty);
+  rpc run_controller_and_vehicle(RunControllerAndVehicleModelRequest)
+      returns (RunControllerAndVehicleModelResponse) {
+  }
+  rpc shut_down(common.Empty) returns (common.Empty);
+}
+
+message VDCSessionRequest {
+    string session_uuid = 1;
+
+    message VehicleAndControllerParams {
+      string rig_file = 1;             // Rig file to use for the controller/vehicle model
+      repeated string amend_files = 2; // Amend files to the configuration
+    }
+    VehicleAndControllerParams vehicle_and_controller_params = 2;
+}
+
+message VDCSessionCloseRequest {
+    string session_uuid = 1;
+}
+
+message RunControllerAndVehicleModelRequest {
+  // Unique identifier for the instance to be propagated
+  string session_uuid = 1;
+
+  // Vehicle state at the current step.
+  // - `state.pose` is the active transform local->rig (see CONTRIBUTING.md, "Coordinate Systems")
+  // - angular and linear rates are resolved in the rig frame
+  common.StateAtTime state = 2;
+
+  // Desired trajectory expressed in the rig frame at the timestamp of the first pose.
+  // Each pose is relative to the rig origin.
+  common.Trajectory planned_trajectory_in_rig = 3;
+
+  // The requested timestamp at the end of the propagation.
+  int64 future_time_us = 4;
+
+  // For a configuration period at the beginning of the simulation, the system                                                                                  
+  // is in a replay/priming phase. During this phase, special care should be taken                                                                              
+  // to match the dynamic state in the vehicle model to prevent unintended drift.                                                                               
+  bool coerce_dynamic_state = 5;
+}
+
+message RunControllerAndVehicleModelResponse {
+  // Ground-truth active transform local->rig after propagation.
+  common.PoseAtTime pose_local_to_rig = 1;
+
+  // Estimated active transform local->rig after propagation.
+  common.PoseAtTime pose_local_to_rig_estimated = 2;
+
+  // Ground-truth dynamic state (velocity, acceleration) in rig frame after propagation.
+  common.DynamicState dynamic_state = 3;
+
+  // Estimated dynamic state in rig frame after propagation.
+  common.DynamicState dynamic_state_estimated = 4;
+}

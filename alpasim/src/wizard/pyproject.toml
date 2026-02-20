@@ -1,0 +1,44 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "alpasim_wizard"
+version = "0.0.1"
+requires-python = ">=3.11.0,<3.13.0"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+
+dependencies = [
+    "hydra-core",
+    "pyYAML",
+    "GitPython",
+    "pandas",
+    "polars>=1.0.0",
+    "pyarrow",
+    "filelock",
+    "boto3",
+    "huggingface_hub",
+    "tqdm",
+    "typing-extensions",
+    "pandas",
+    "pytest",
+    "pytest-asyncio",
+    "pandas-stubs",
+    "types-PyYAML",
+    # Pin cryptography to avoid GLIBC 2.33 requirement on compute nodes
+    "cryptography>=41.0.3,<42.0.0",
+]
+
+[tool.pytest.ini_options]
+asyncio_default_fixture_loop_scope = "function"
+
+[tool.setuptools]
+py-modules  = ["alpasim_wizard"]
+
+# Executable for `uv tool run`
+[project.scripts]
+alpasim_wizard = "alpasim_wizard.__main__:main"
+alpasim_check_config = "alpasim_wizard.check_config:main"

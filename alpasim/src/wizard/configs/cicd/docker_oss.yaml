@@ -1,0 +1,8 @@
+# @package _global_
+# CI integration test configuration, used for docker-compose CI tests
+# This config uses the oss stable manifest images
+
+defaults:
+  - common
+  - /stable_manifest/oss
+  - _self_

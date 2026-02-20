@@ -1,0 +1,40 @@
+// SPDX-License-Identifier: Apache-2.0
+// Copyright (c) 2025 NVIDIA Corporation
+
+syntax = "proto3";
+
+import "alpasim_grpc/v0/common.proto";
+
+service RuntimeService {
+    rpc simulate (SimulationRequest) returns (SimulationReturn);
+}
+
+message RolloutSpec {
+    string scenario_id = 1;
+    fixed64 random_seed = 2;
+}
+
+message SimulationRequest {
+    message DriverAddress {
+        string ip = 1;
+        uint32 port = 2;
+    }
+
+    repeated DriverAddress available_drivers = 1;
+    repeated RolloutSpec rollout_specs = 2; // note a scenario may be requested multiple times
+}
+
+message SimulationReturn {
+    message RolloutReturn {
+        RolloutSpec rollout_spec = 1;
+        string results_json = 2;
+    }
+
+    common.VersionId runtime_version = 1;
+    common.VersionId nre_version = 2;
+    common.VersionId physics_version = 3;
+    common.VersionId driver_version = 4;
+    common.VersionId traffic_version = 5;
+
+    repeated RolloutReturn rollout_returns = 6;
+}

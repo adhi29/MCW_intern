@@ -1,0 +1,41 @@
+[build-system]
+requires = [ "setuptools>=61.0" ]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "alpasim_eval"
+version = "1.34.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11,<3.13"
+dependencies = [
+  "pandas",
+  "polars[all]",
+  "seaborn",
+  "seaborn-polars",
+  "matplotlib",
+  "papermill",
+  "ipykernel",
+  "alpasim_grpc",
+  "alpasim_utils",
+  "omegaconf",
+  "shapely",
+  "trajdata-alpasim @ git+https://github.com/NVlabs/trajdata.git@alpasim",
+  "rich[jupyter]",
+  "pytest",
+  "csaps",
+  "ipywidgets",
+  "opencv-python",
+  "Pillow",
+  "numpy",
+  "yappi",
+  "dataclasses-json"
+]
+
+  [project.scripts]
+  alpasim-eval = "eval.main:main"
+  alpasim-aggregation = "eval.aggregation.main:main"
+
+[tool.uv.sources]
+alpasim_grpc = {workspace = true}
+alpasim_utils = {workspace = true}

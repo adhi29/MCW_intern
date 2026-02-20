@@ -1,0 +1,33 @@
+.venv/
+.pytest_cache/
+.vscode/
+**/test_output/**
+build.env
+runtime.build.env
+ddb.build.env
+.netrc
+netrc.secret
+__pycache__/
+.mypy_cache/
+.wizard*/
+
+# AI stuff
+.claude
+.serena
+.zed
+CLAUDE.md
+
+**/*.egg-info
+**/build/
+**/dist/
+
+runs/*
+tools/run-on-ord/runs
+tools/run-on-ord/outputs
+src/tools/run-on-ord/runs
+src/tools/run-on-ord/outputs
+data/vavam-driver/*
+
+# uv.lock is only used in local development. On the server, we use uv tool run,
+# which does not require uv.lock.
+**/uv.lock
